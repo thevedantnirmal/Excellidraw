@@ -1,1 +1,2 @@
-export * as jwt from 'jsonwebtoken'
+import jsonwebtoken from 'jsonwebtoken'
+export default jsonwebtoken
