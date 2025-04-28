@@ -20,6 +20,9 @@ importers:
 
   apps/frontend:
     dependencies:
+      '@repo/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@types/axios':
         specifier: ^0.14.4
         version: 0.14.4

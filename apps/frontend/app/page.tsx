@@ -8,6 +8,7 @@ import {
   Palette,
   ChevronRight
 } from 'lucide-react';
+import Link from 'next/link';
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
@@ -39,12 +40,12 @@ export default function Home() {
               A virtual whiteboard for sketching hand-drawn like diagrams, wireframes, and notes. Collaborate in real-time with your team.
             </p>
             <div className="flex justify-center space-x-4">
-              <button className="bg-purple-600 text-white px-8 py-3 rounded-lg hover:bg-purple-700 transition-colors flex items-center">
-                Try Now <ChevronRight className="ml-2 h-5 w-5" />
-              </button>
-              <button className="border-2 border-purple-600 text-purple-600 px-8 py-3 rounded-lg hover:bg-purple-50 transition-colors">
-                Watch Demo
-              </button>
+             <Link href={'/signup'}> <button className="bg-purple-600 text-white px-8 py-3 rounded-lg hover:bg-purple-700 transition-colors flex items-center">
+                Register Now<ChevronRight className="ml-2 h-5 w-5" />
+              </button></Link>
+              <Link href={"/signin"}><button className="border-2 border-purple-600 text-purple-600 px-8 py-3 rounded-lg hover:bg-purple-50 transition-colors">
+                Login
+              </button></Link>
             </div>
           </div>
         </div>

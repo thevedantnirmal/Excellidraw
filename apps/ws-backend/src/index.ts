@@ -74,16 +74,9 @@ wss.on('connection',function connection(ws,request){
         })
 }     
       catch(e){
-        ws.send("Enable to accesss databse")
+        ws.send("Enable to accesss database")
         ws.close
       }
-      console.log("RoomID:",roomId)
-      console.log("Users",Users.map((u)=>({
-        userId:u.userId,
-        rooms:u.rooms
-      })));
-
-         
          Users.forEach(user=>{
           if(user.rooms.includes(roomId)){
             user.ws.send(JSON.stringify({

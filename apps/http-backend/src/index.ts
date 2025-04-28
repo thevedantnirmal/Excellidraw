@@ -11,13 +11,18 @@ app.use(cors())
 //@ts-ignore
 app.post('/signup',async (req,res)=>{
     const {email,password,name}=req.body;
+    if(!email||!password||!name){
+        res.status(400).json({
+            message:"Incomplete Credentials"
+        })
+    }
     try{
         const dataValidation=SignUpSchema.parse({email,password,name});
 
     }
     catch{
         res.json({
-            message:"Enter the data in correct format"
+            message:"Enter the data in the correct format"
         })
     }
     
@@ -27,7 +32,7 @@ app.post('/signup',async (req,res)=>{
 })
 }
    catch{
-    res.json({
+    res.status(400).json({
         message:"User already exists"
     })
    } 
@@ -41,12 +46,24 @@ app.post('/signin',async(req,res)=>{
    }
   const user= await client.user.findFirst({
     where:{
-        email,password
+        email
     }
    })
 if(!user){
-    res.json({message:"user not found"})
+    res.status(400).json({message:"User not found"})
     return 
+}
+const correctCredentails=await client.user.findFirst({
+    where:{
+        email,password
+
+    }
+})
+if(!correctCredentails){
+    res.status(400).json({
+        message:"Incorrect credentials"
+    })
+    return
 }
 const token=jwt.sign({userId:user?.id},JWT_SECRET)
 res.json({
@@ -85,12 +102,12 @@ app.post("/room",AuthMiddleware,async(req,res)=>{
 
     })
 
- app.get("/chat/:roomId",async(req,res)=>{
+ app.get("/chat/:roomId",AuthMiddleware,async(req,res)=>{
     const roomId=Number(req.params.roomId)
     
     if(isNaN(roomId)) {
         res.json({
-            messsage:"Enter the correvt roomId"
+            messsage:"Enter the correct roomId"
         })
         return ;
     }
@@ -112,7 +129,7 @@ app.post("/room",AuthMiddleware,async(req,res)=>{
     }
  })   
 
- app.get('/room/:slug',async(req,res)=>{
+ app.get('/room/:slug',AuthMiddleware,async(req,res)=>{
     const slug=req.params.slug;
     try{
     const room=await client.room.findFirst({

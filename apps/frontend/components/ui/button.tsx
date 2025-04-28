@@ -7,14 +7,14 @@ interface ButtonProps extends PropsWithChildren{
   onClick:()=>void,
   size:"sm"|"md"|"lg",
   type:"primary"|"secondary"|"tertiary"
+  activated:Boolean
 }
-export default function Button({children,onClick,size,type}:ButtonProps){
-  const sizeStyle=size==="sm"?"px-5 py- 10":size==="md"?"px-8 py-16":"px-[10rem] py-24"
+export default function Button({children,onClick,size,type,activated}:ButtonProps){
+  const sizeStyle=size==="sm"?"px-8 py-4":size==="md"?"px-16 py-8":"px-20 py-10"
   const typeStyle=type==="primary"?"":type==="secondary"?"":""
-  return <div>
+  return <div className="opacity-80 ">
     <button 
-    style={{backgroundColor: "red"}}
-    //className={` ${sizeStyle} bg-red-500 `}
+    className={` ${sizeStyle} rounded-2xl border border-black ${activated?"bg-blue-300":""}`}
     onClick={onClick}>{children}</button>
 
   </div>

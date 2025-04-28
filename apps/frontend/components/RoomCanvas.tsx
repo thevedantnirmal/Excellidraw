@@ -8,9 +8,18 @@ import { useEffect } from "react";
 
 export default  function RoomCanvas({roomId}:{roomId:string}){
     const [socket,setSocket]=useState<WebSocket|null>(null);
+    const [token,setToken]=useState(" ")
+    
+    useEffect(()=>{
+        
+        setToken(localStorage.getItem("token") as unknown as string)
+
+    },[])
 
    useEffect(()=>{
-    const ws=new WebSocket(`${WS_URL}?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjYjFlZmM1YS05MGE1LTQ2YmEtOTUwOS0wYTM3ZGIwZjIzMjYiLCJpYXQiOjE3NDI2NTE5NTl9.mogqyKwZ6wXQvGJqwZmrupH7CUjMkPSnH56OieUF-Jg`)
+    if (!token) return;
+
+    const ws=new WebSocket(`${WS_URL}?token=${token}`)
     ws.onopen=(event)=>{
         setSocket(ws)
         ws.send(JSON.stringify({
@@ -20,7 +29,7 @@ export default  function RoomCanvas({roomId}:{roomId:string}){
        
     }
     
-   },[])
+   },[token])
    
     if (!socket) {
         return <div>
